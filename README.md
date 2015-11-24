@@ -15,16 +15,18 @@ Or, do manual install:
 
 ```javascript
 module.exports = {
-    replace: {
-        encoding: 'utf8',
-        log: true,
-        mapping: {
-            'date': (new Date()).toISOString(),
-            'timestamp': Math.floor(Date.now() / 1000)
-        },
-        paths: [],
-        replacePrefix: '{!',
-        replaceSuffix: '!}'
+    plugins: {
+        replace: {
+            encoding: 'utf8',
+            log: true,
+            mapping: {
+                'date': (new Date()).toISOString(),
+                'timestamp': Math.floor(Date.now() / 1000)
+            },
+            paths: [],
+            replacePrefix: '{!',
+            replaceSuffix: '!}'
+        }
     }
 };
 ```
