@@ -1,0 +1,9 @@
+# Directories
+/.idea
+/node_modules
+/test_files
+
+# Files
+*.DS_Store
+*.log
+test.js

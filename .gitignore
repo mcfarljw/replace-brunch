@@ -1,0 +1,8 @@
+# Directories
+/.idea
+/.sass-cache
+/node_modules
+
+# Files
+*.DS_Store
+*.log
