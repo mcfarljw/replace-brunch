@@ -1,5 +1,5 @@
 ## replace-brunch
-[![Build Status](https://travis-ci.org/mcfarljw/replace-brunch.svg?branch=master)](https://travis-ci.org/mcfarljw/replace-brunch)
+[![Build Status](https://travis-ci.org/jernung/replace-brunch.svg?branch=master)](https://travis-ci.org/jernung/replace-brunch)
 
 ## Usage
 Install the plugin via npm with `npm install --save replace-brunch`.
