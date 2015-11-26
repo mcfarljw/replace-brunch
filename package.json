@@ -2,7 +2,11 @@
   "name": "replace-brunch",
   "version": "0.1.0",
   "description": "Adds string replacement support to Brunch.",
-  "author": "Joshua McFarland",
+  "author": {
+    "name": "Joshua McFarland",
+    "email": "josh@jernung.com",
+    "url": "http://www.jernung.com"
+  },
   "license": "MIT",
   "keywords": [
     "brunchplugin",
@@ -11,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcfarljw/replace-brunch.git"
+    "url": "https://github.com/jernung/replace-brunch.git"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha"
