@@ -50,7 +50,7 @@ ReplaceCompiler.prototype.getConfig = function() {
  * @returns {Array}
  */
 ReplaceCompiler.prototype.getPaths = function(files, config) {
-    return lodash.pluck(files, 'path').filter(function(path) {
+    return lodash.map(files, 'path').filter(function(path) {
         return !config.paths.length || config.paths.indexOf(path) > -1;
     });
 };
