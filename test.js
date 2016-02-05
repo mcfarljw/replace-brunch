@@ -8,6 +8,7 @@ describe('Plugin', function() {
     afterEach(function(done) {
         async.parallel([
             async.apply(filesystem.writeFile, 'test_files/date.txt', '{!date!}', 'utf8'),
+            async.apply(filesystem.writeFile, 'test_files/manifest.json', '{"version": "{?version?}"}', 'utf8'),
             async.apply(filesystem.writeFile, 'test_files/timestamp.txt', '{!timestamp!}', 'utf8'),
             async.apply(filesystem.writeFile, 'test_files/version.txt', '{?version?}', 'utf8')
         ], done);
@@ -85,15 +86,31 @@ describe('Plugin', function() {
             }
         });
         var config = plugin.getConfig();
-        plugin.replaceFile('test_files/version.txt', config, function(error, path, data) {
-            if (error) {
-                done(error);
-            } else {
-                var version = data.toString();
-                expect(version).to.equal('0.0.1');
-                done();
+        async.parallel([
+            function(callback) {
+                plugin.replaceFile('test_files/manifest.json', config, function(error, path, data) {
+                    if (error) {
+                        callback(error);
+                    } else {
+                        var version = data.toString();
+                        expect(version).to.equal('{"version": "0.0.1"}');
+                        callback();
+                    }
+                });
+            },
+            function(callback) {
+                plugin.replaceFile('test_files/version.txt', config, function(error, path, data) {
+                    if (error) {
+                        callback(error);
+                    } else {
+                        var version = data.toString();
+                        expect(version).to.equal('0.0.1');
+                        callback();
+                    }
+                });
             }
-        });
+        ], done);
+
     });
 
 });
