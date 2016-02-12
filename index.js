@@ -30,17 +30,20 @@ ReplaceCompiler.prototype.brunchPlugin = true;
  * @returns {Object}
  */
 ReplaceCompiler.prototype.getConfig = function() {
-    return lodash.defaultsDeep(this.config.plugins.replace, {
-        encoding: 'utf8',
-        log: true,
-        mappings: {
-            date: (new Date()).toISOString(),
-            timestamp:  Math.floor(Date.now() / 1000)
-        },
-        paths: [],
-        replacePrefix: '{!',
-        replaceSuffix: '!}'
-    });
+    return lodash.defaultsDeep(
+        this.config.plugins.replace,
+        {
+            encoding: 'utf8',
+            log: true,
+            mappings: {
+                date: (new Date()).toISOString(),
+                timestamp:  Math.floor(Date.now() / 1000)
+            },
+            paths: [],
+            replacePrefix: '{!',
+            replaceSuffix: '!}'
+        }
+    );
 };
 
 /**
@@ -50,9 +53,13 @@ ReplaceCompiler.prototype.getConfig = function() {
  * @returns {Array}
  */
 ReplaceCompiler.prototype.getPaths = function(files, config) {
-    return lodash.map(files, 'path').filter(function(path) {
-        return !config.paths.length || config.paths.indexOf(path) > -1;
-    });
+    return files
+        .map(function(file) {
+            return file.destinationPath || file.path;
+        })
+        .filter(function(path) {
+            return config.paths.indexOf(path) > -1;
+        });
 };
 
 /**
@@ -94,11 +101,12 @@ ReplaceCompiler.prototype.replaceFile = function(path, config, callback) {
 /**
  * @method onCompile
  * @param {Array} files
+ * @param {Array} assets
  * @param {Function} [callback]
  */
-ReplaceCompiler.prototype.onCompile = function(files, callback) {
+ReplaceCompiler.prototype.onCompile = function(files, assets, callback) {
     var config = this.getConfig();
-    var paths = this.getPaths(files, config);
+    var paths = this.getPaths(files.concat(assets), config);
     var started = Date.now();
     async.each(
         paths,
