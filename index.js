@@ -12,11 +12,14 @@ var lodash = require('lodash');
  */
 function ReplaceCompiler(config) {
     this.config = lodash.cloneDeep(config || {});
-    this.config = lodash.defaultsDeep(this.config, {
-        plugins: {
-            replace: {}
+    this.config = lodash.defaultsDeep(
+        this.config,
+        {
+            plugins: {
+                replace: {}
+            }
         }
-    });
+    );
 }
 
 /**
@@ -53,13 +56,15 @@ ReplaceCompiler.prototype.getConfig = function() {
  * @returns {Array}
  */
 ReplaceCompiler.prototype.getPaths = function(files, config) {
-    return files
+    return lodash
+        .chain(files)
         .map(function(file) {
             return file.destinationPath || file.path;
         })
         .filter(function(path) {
             return config.paths.indexOf(path) > -1;
-        });
+        })
+        .value();
 };
 
 /**
@@ -69,33 +74,42 @@ ReplaceCompiler.prototype.getPaths = function(files, config) {
  * @param {Function} [callback]
  */
 ReplaceCompiler.prototype.replaceFile = function(path, config, callback) {
-    filesystem.readFile(path, config.encoding, function(error, data) {
-        if (error) {
-            if (typeof callback === 'function') {
-                callback(error, path);
-            }
-        } else {
-            for (var key in config.mappings) {
-                if (config.mappings.hasOwnProperty(key)) {
-                    var searchString = escape(config.replacePrefix + key.toString() + config.replaceSuffix);
-                    var searchExpression = new RegExp(searchString, 'g');
-                    var replaceString = config.mappings[key.toString()];
-                    data = data.replace(searchExpression, replaceString);
+    filesystem.readFile(
+        path,
+        config.encoding,
+        function(error, data) {
+            if (error) {
+                if (typeof callback === 'function') {
+                    callback(error, path);
                 }
-            }
-            filesystem.writeFile(path, data, config.encoding, function(error) {
-                if (error) {
-                    if (typeof callback === 'function') {
-                        callback(error, path);
-                    }
-                } else {
-                    if (typeof callback === 'function') {
-                        callback(null, path, data, config);
+            } else {
+                for (var key in config.mappings) {
+                    if (config.mappings.hasOwnProperty(key)) {
+                        var searchString = escape(config.replacePrefix + key.toString() + config.replaceSuffix);
+                        var searchExpression = new RegExp(searchString, 'g');
+                        var replaceString = config.mappings[key.toString()];
+                        data = data.replace(searchExpression, replaceString);
                     }
                 }
-            });
+                filesystem.writeFile(
+                    path,
+                    data,
+                    config.encoding,
+                    function(error) {
+                        if (error) {
+                            if (typeof callback === 'function') {
+                                callback(error, path);
+                            }
+                        } else {
+                            if (typeof callback === 'function') {
+                                callback(null, path, data, config);
+                            }
+                        }
+                    }
+                );
+            }
         }
-    });
+    );
 };
 
 /**
@@ -110,9 +124,12 @@ ReplaceCompiler.prototype.onCompile = function(files, assets, callback) {
     var started = Date.now();
     async.each(
         paths,
-        lodash.bind(function(path, callback) {
-            this.replaceFile(path, config, callback);
-        }, this),
+        lodash.bind(
+            function(path, callback) {
+                this.replaceFile(path, config, callback);
+            },
+            this
+        ),
         function(error, path) {
             if (config.log) {
                 if (error) {
