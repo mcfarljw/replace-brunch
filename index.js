@@ -62,7 +62,7 @@ ReplaceCompiler.prototype.getPaths = function(files, config) {
             return file.destinationPath || file.path;
         })
         .filter(function(path) {
-            return config.paths.indexOf(path) > -1;
+            return !config.paths.length || config.paths.indexOf(path) > -1;
         })
         .value();
 };
