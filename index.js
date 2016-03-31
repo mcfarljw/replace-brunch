@@ -59,7 +59,7 @@ ReplaceCompiler.prototype.getPaths = function(files, config) {
     return lodash
         .chain(files)
         .map(function(file) {
-            return file.destinationPath || file.path;
+            return (file.destinationPath || file.path).replace(/\\/g, '/');
         })
         .filter(function(path) {
             return !config.paths.length || config.paths.indexOf(path) > -1;
