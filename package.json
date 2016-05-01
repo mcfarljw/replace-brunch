@@ -1,6 +1,6 @@
 {
   "name": "replace-brunch",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Adds string replacement support to Brunch.",
   "author": {
     "name": "Joshua McFarland",
