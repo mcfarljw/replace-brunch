@@ -1,11 +1,11 @@
 {
   "name": "replace-brunch",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Adds string replacement support to Brunch.",
   "author": {
     "name": "Joshua McFarland",
-    "email": "josh@jernung.com",
-    "url": "http://www.jernung.com"
+    "email": "mcfarljw@gmail.com",
+    "url": "https://github.com/mcfarljw"
   },
   "license": "MIT",
   "keywords": [
@@ -15,19 +15,19 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/jernung/replace-brunch.git"
+    "url": "https://github.com/mcfarljw/replace-brunch.git"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
   "dependencies": {
-    "async": "~1.5.0",
+    "async": "~2.1.0",
     "escape-string-regexp": "~1.0.0",
-    "lodash": "~4.13.0",
+    "lodash": "~4.17.0",
     "loggy": "~0.3.0"
   },
   "devDependencies": {
     "chai": "~3.5.0",
-    "mocha": "~2.5.0"
+    "mocha": "~3.1.0"
   }
 }
