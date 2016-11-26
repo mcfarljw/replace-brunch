@@ -32,7 +32,7 @@ describe('ReplacePlugin', function() {
       };
 
       const plugin = new Plugin(options);
-      const pluginConfig = plugin.getConfig();
+      const pluginConfig = plugin.config;
 
       const paths = plugin.getPaths(
         [
@@ -51,7 +51,7 @@ describe('ReplacePlugin', function() {
   it('should set default configs and paths',
     () => {
       const plugin = new Plugin();
-      const pluginConfig = plugin.getConfig();
+      const pluginConfig = plugin.config;
 
       const paths = plugin.getPaths(
         [
@@ -75,7 +75,7 @@ describe('ReplacePlugin', function() {
   it('should replace default string mappings',
     (done) => {
       const plugin = new Plugin();
-      const pluginConfig = plugin.getConfig();
+      const pluginConfig = plugin.config;
 
       async.parallel(
         [
@@ -118,7 +118,7 @@ describe('ReplacePlugin', function() {
       };
 
       const plugin = new Plugin(options);
-      const pluginConfig = plugin.getConfig();
+      const pluginConfig = plugin.config;
 
       async.parallel(
         [

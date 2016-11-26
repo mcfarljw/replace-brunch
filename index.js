@@ -9,18 +9,7 @@ class ReplaceCompiler {
 
   constructor(config) {
     this.config = lodash.defaultsDeep(
-      lodash.cloneDeep(config || {}),
-      {
-        plugins: {
-          replace: {}
-        }
-      }
-    );
-  }
-
-  getConfig() {
-    return lodash.defaultsDeep(
-      this.config.plugins.replace,
+      lodash.cloneDeep(config && config.plugins && config.plugins.replace || {}),
       {
         encoding: 'utf8',
         log: true,
@@ -93,7 +82,6 @@ class ReplaceCompiler {
 
   onCompile(files, assets) {
     const started = Date.now();
-    const config = this.getConfig();
     const paths = this.getPaths(files.concat(assets), config);
 
     return Promise
@@ -101,7 +89,7 @@ class ReplaceCompiler {
         lodash.map(
           paths,
           (path) => {
-            return this.replaceFile(path, config);
+            return this.replaceFile(path, this.config);
           }
         )
       )
