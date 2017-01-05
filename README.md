@@ -12,7 +12,7 @@ module.exports = {
         replace: {
             encoding: 'utf8',
             log: true,
-            mapping: {
+            mappings: {
                 'date': (new Date()).toISOString(),
                 'timestamp': Math.floor(Date.now() / 1000)
             },
