@@ -95,16 +95,22 @@ class ReplaceCompiler {
       )
       .then(
         () => {
-          logger.info(
-            'replaced mappings in ' +
-            paths.length +
-            ' files, replaced in ' +
-            (Date.now() - started) +
-            'ms'
-          );
+          if (config.log) {
+            logger.info(
+              'replaced mappings in ' +
+              paths.length +
+              ' files, replaced in ' +
+              (Date.now() - started) +
+              'ms'
+            );
+          }
         }
       )
-      .catch((error) => logger.error(error));
+      .catch((error) => {
+        if (config.log) {
+          logger.error(error)
+        }
+      });
   }
 
 }
